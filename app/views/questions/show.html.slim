@@ -1,2 +1,15 @@
-p = @question.title
-p = @question.body
+p
+  strong = @question.title
+  br
+  = @question.body
+
+table
+  tr
+    th Answers
+  - @question.answers.each do |answer|
+    tr
+      td = answer.body
+
+= form_for Answer.new, url: question_answers_path(@question) do |f|
+  = f.text_field :body
+  = f.submit
