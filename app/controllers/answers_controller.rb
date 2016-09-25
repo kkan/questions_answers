@@ -5,6 +5,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @question
     else
+      flash[:notice] = 'Error while saving answer.'
       render 'questions/show'
     end
   end

@@ -1,0 +1,20 @@
+require 'rails_helper'
+
+feature 'Answer the question', %q{
+  In order to help
+  As an user
+  I want to be able answer the question
+} do
+
+  before do
+    visit question_path(create(:question))
+  end
+
+  scenario do
+    attrs = attributes_for(:answer)
+    fill_in 'answer[body]', with: attrs[:body]
+    click_on 'Create'
+
+    expect(page).to have_content attrs[:body]
+  end
+end
