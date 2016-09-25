@@ -1,6 +1,10 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show]
 
+  def show
+    @answer = Answer.new
+  end
+
   def new
     @question = Question.new
   end

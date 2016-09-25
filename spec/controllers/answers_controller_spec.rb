@@ -6,8 +6,9 @@ RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
     describe 'valid params' do
       it 'creates answer in db' do
-        expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.
-          to change(Answer, :count).by(1)
+        q = question
+        expect { post :create, params: { question_id: q, answer: attributes_for(:answer) } }.
+          to change(q.answers, :count).by(1)
       end
 
       it 'redirects back to question page' do
@@ -23,7 +24,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects back to question page' do
         post :create, params: { question_id: question, answer: { body: '' } }
-        expect(response).to redirect_to question
+        expect(response).to render_template 'questions/show'
       end
     end
   end

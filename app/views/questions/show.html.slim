@@ -10,6 +10,6 @@ table
     tr
       td = answer.body
 
-= form_for Answer.new, url: question_answers_path(@question) do |f|
+= form_for @answer, url: question_answers_path(@question) do |f|
   = f.text_field :body
   = f.submit
