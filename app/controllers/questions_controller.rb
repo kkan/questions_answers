@@ -9,6 +9,10 @@ class QuestionsController < ApplicationController
     @question = Question.new
   end
 
+  def index
+    @questions = Question.all
+  end
+
   def create
     @question = Question.create(question_params)
 
