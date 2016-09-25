@@ -15,6 +15,7 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to @question
     else
+      flash[:alert] = 'Error while saving question.'
       render :new
     end
   end
