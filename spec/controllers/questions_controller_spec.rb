@@ -31,6 +31,20 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'GET #index' do
+    let(:questions) { create_list(:question, 2) }
+
+    before { get :index }
+
+    it 'set list of all question to @questions' do
+      expect(assigns(:questions)).to eq questions
+    end
+
+    it 'render index page' do
+      expect(response).to render_template :index
+    end
+  end
+
   describe 'POST #create' do
     context 'with valid params' do
       it 'save new question to db' do
