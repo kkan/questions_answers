@@ -13,6 +13,8 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
+gem 'devise'
+
 gem 'faker'
 
 group :development, :test do
@@ -21,6 +23,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'factory_girl_rails'
+  gem 'launchy'
 end
 
 group :test do
