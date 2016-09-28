@@ -12,7 +12,7 @@ feature 'Sign up', %q{
     fill_in 'user[email]', with: 'email@test.com' 
     fill_in 'user[password]', with: 'strong_password' 
     fill_in 'user[password_confirmation]', with: 'strong_password'
-    click_on 'Sign up'
+    click_button 'Sign up'
 
     expect(page).to have_content('You have signed up successfully.')
   end
@@ -21,7 +21,7 @@ feature 'Sign up', %q{
     fill_in 'user[email]', with: 'email@test.com'
     fill_in 'user[password]', with: '1'
     fill_in 'user[password_confirmation]', with: '1'
-    click_on 'Sign up'
+    click_button 'Sign up'
 
     expect(page).to have_content('prohibited this user from being saved')
   end
