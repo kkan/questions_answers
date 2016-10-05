@@ -73,4 +73,25 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    login_user
+
+    it 'removes question from database' do
+      q = create(:question, user: controller.current_user)
+      expect { delete :destroy, params: { id: q } }.to change(Question, :count).by(-1)
+    end
+
+    it 'redirects to questions index page' do
+      q = create(:question, user: controller.current_user)
+      delete :destroy, params: { id: q }
+      expect(response).to redirect_to questions_path
+    end
+
+    it 'does not delete question form db if it is not user\'s question' do
+      q = create(:question)
+      delete :destroy, params: { id: q }
+      expect { delete :destroy, params: { id: q } }.to_not change(Question, :count)
+    end
+  end
 end

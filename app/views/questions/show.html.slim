@@ -1,3 +1,5 @@
+= link_to_if @question.user == current_user, 'Delete', question_path(@question), method: :delete
+
 p
   strong = @question.title
   br
