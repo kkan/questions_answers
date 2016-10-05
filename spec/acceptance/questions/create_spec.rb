@@ -7,14 +7,11 @@ feature 'Create question', %q{
 } do
 
   given(:user) { create(:user) }
+  given(:attrs) { attributes_for(:question) }
 
   scenario do
     sign_in(user)
-    visit new_question_path
-    attrs = attributes_for(:question)
-    fill_in 'question[title]', with: attrs[:title]
-    fill_in 'question[body]', with: attrs[:body]
-    click_on 'Create'
+    create_question(attrs)
 
     expect(page).to have_content attrs[:body]
   end
