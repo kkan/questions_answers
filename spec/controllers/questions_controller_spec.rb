@@ -20,6 +20,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
+    login_user
+    
     before { get :new }
 
     it 'set new question' do
@@ -46,6 +48,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    login_user
     context 'with valid params' do
       it 'save new question to db' do
         expect { post :create, params: { question: attributes_for(:question) } }.

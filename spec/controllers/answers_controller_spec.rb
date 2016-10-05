@@ -5,6 +5,8 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'POST #create' do
     describe 'valid params' do
+      login_user
+      
       it 'creates answer in db' do
         q = question
         expect { post :create, params: { question_id: q, answer: attributes_for(:answer) } }.
@@ -17,6 +19,8 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
     describe 'invalid params' do
+      login_user
+
       it 'don\'t creates answer in db' do
         expect { post :create, params: { question_id: question, answer: { body: '' } } }.
           not_to change(Answer, :count)

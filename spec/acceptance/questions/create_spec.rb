@@ -6,9 +6,11 @@ feature 'Create question', %q{
   I want to be able ask question
 } do
 
-  before { visit new_question_path }
+  given(:user) { create(:user) }
 
   scenario do
+    sign_in(user)
+    visit new_question_path
     attrs = attributes_for(:question)
     fill_in 'question[title]', with: attrs[:title]
     fill_in 'question[body]', with: attrs[:body]

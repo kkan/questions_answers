@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!, only: [ :create ]
+  
   def create
     @question = Question.find(params[:question_id])
     @answer = Answer.new(answer_params.merge(question: @question))
