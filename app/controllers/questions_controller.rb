@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: [ :new, :create, :destroy ]
-  before_action :set_question, only: [:show, :destroy]
+  before_action :set_question, only: [:show]
 
   def show
     @answer = Answer.new
@@ -26,13 +26,8 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      @question.destroy
-      redirect_to questions_path, notice: 'Question successfully destroyed'
-    else
-      flash[:alert] = 'You are trying to delete not yours question'
-      redirect_back(fallback_location: questions_path) 
-    end
+    current_user.questions.find(params[:id]).destroy!
+    redirect_to questions_path, notice: 'Question successfully destroyed'
   end
 
   private
