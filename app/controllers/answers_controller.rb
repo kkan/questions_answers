@@ -3,8 +3,8 @@ class AnswersController < ApplicationController
   
   def create
     @question = Question.find(params[:question_id])
-    @answer = Answer.new(answer_params.merge(question: @question, user: current_user))
-    if @answer.save
+    answer = @question.answers.new(answer_params.merge(question: @question, user: current_user))
+    if answer.save
       redirect_to @question
     else
       flash[:notice] = 'Error while saving answer.'
@@ -13,14 +13,14 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer = Answer.find(params[:id])
-    if @answer.user == current_user
-      @answer.destroy
+    answer = Answer.find(params[:id])
+    if current_user.author_of?(answer)
+      answer.destroy
       flash[:notice] = 'Answer successfully destroyed'
     else
       flash[:alert] = 'You can\'t delete not yours answer'
     end
-    redirect_back(fallback_location: question_path(@answer.question))
+    redirect_back(fallback_location: question_path(answer.question_id))
   end
 
   private
