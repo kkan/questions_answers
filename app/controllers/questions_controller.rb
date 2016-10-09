@@ -15,7 +15,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.create(question_params.merge(user: current_user))
+    @question = Question.new(question_params.merge(user: current_user))
 
     if @question.save
       redirect_to @question
@@ -26,7 +26,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if @question.user == current_user
+    if current_user.author_of?(@question)
       @question.destroy
       redirect_to questions_path, notice: 'Question successfully destroyed'
     else

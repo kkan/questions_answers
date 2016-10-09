@@ -13,7 +13,7 @@ feature 'Destroy answer', %q{
     sign_in(user)
 
     create_answer(attrs)
-    find('span', text: attrs[:body]).parent.find_link('Delete').click
+    within('table') { find_link('Delete').click }
 
     expect(page).to have_content 'Answer successfully destroyed'
   end

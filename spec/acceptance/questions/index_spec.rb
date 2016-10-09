@@ -10,7 +10,7 @@ feature 'User view list of questions', %q{
     question_titles = create_list(:question, 5).map(&:title)
 
     visit questions_path
-    2.times { expect(page).to have_content question_titles.sample }
+    question_titles.each { |qt| expect(page).to have_content qt }
   end
 
 end

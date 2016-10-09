@@ -12,7 +12,7 @@ feature 'Question body and answers to it page', %q{
 
     visit question_path(question)
     expect(page).to have_content question.body
-    2.times { expect(page).to have_content answers.sample }
+    answers.each { |a| expect(page).to have_content a }
   end
 
 end
