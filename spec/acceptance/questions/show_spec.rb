@@ -6,7 +6,7 @@ feature 'Question body and answers to it page', %q{
   I want to view question and answers to it
 } do
 
-  scenario do
+  scenario 'User see question and answers to it' do
     question = create(:question)
     answers = create_list(:answer, 4, question: question).map(&:body)
 

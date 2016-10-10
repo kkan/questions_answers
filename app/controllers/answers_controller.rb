@@ -3,8 +3,8 @@ class AnswersController < ApplicationController
   
   def create
     @question = Question.find(params[:question_id])
-    answer = @question.answers.new(answer_params.merge(question: @question, user: current_user))
-    if answer.save
+    @answer = current_user.answers.new(answer_params.merge(question: @question))
+    if @answer.save
       redirect_to @question
     else
       flash[:notice] = 'Error while saving answer.'
@@ -13,7 +13,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer = current_user.answers.find(params[:id]).destroy!
+    @answer = current_user.answers.find(params[:id]).destroy
     redirect_to question_path(@answer.question_id), notice: 'Answer successfully destroyed'
   end
 
