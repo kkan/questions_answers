@@ -13,6 +13,11 @@ RSpec.describe AnswersController, type: :controller do
           to change(q.answers, :count).by(1)
       end
 
+      it 'connect new answer to current user' do
+        expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.
+          to change(controller.current_user.answers, :count).by(1)
+      end
+
       it 'redirects back to question page' do
         post :create, params: { question_id: question, answer: attributes_for(:answer) }
         expect(response).to redirect_to question
