@@ -9,31 +9,34 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'creates answer in db' do
         q = question
-        expect { post :create, params: { question_id: q, answer: attributes_for(:answer) } }.
-          to change(q.answers, :count).by(1)
+        expect do
+          post :create, params: { question_id: q, answer: attributes_for(:answer) }, format: :js
+        end.to change(q.answers, :count).by(1)
       end
 
       it 'connect new answer to current user' do
-        expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.
-          to change(controller.current_user.answers, :count).by(1)
+        expect do
+          post :create, params: { question_id: question, answer: attributes_for(:answer) }, format: :js
+        end.to change(controller.current_user.answers, :count).by(1)
       end
 
       it 'redirects back to question page' do
-        post :create, params: { question_id: question, answer: attributes_for(:answer) }
-        expect(response).to redirect_to question
+        post :create, params: { question_id: question, answer: attributes_for(:answer) }, format: :js
+        expect(response).to render_template 'create'
       end
     end
+
     describe 'invalid params' do
       login_user
 
       it 'don\'t creates answer in db' do
-        expect { post :create, params: { question_id: question, answer: { body: '' } } }.
+        expect { post :create, params: { question_id: question, answer: { body: '' } }, format: :js }.
           not_to change(Answer, :count)
       end
 
       it 'redirects back to question page' do
-        post :create, params: { question_id: question, answer: { body: '' } }
-        expect(response).to render_template 'questions/show'
+        post :create, params: { question_id: question, answer: { body: '' }, format: :js }
+        expect(response).to render_template 'create'
       end
     end
   end

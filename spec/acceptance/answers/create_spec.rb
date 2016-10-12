@@ -9,11 +9,13 @@ feature 'Answer the question', %q{
   given(:user) { create(:user) }
   given(:attrs) { attributes_for(:answer) }
 
-  scenario 'User creates answer' do
+  scenario 'User creates answer', js: true do
     sign_in(user)
     create_answer(attrs)
 
-    expect(page).to have_content attrs[:body]
+    within '.answers' do
+      expect(page).to have_content attrs[:body]
+    end
   end
 
   scenario "User can't create answer with empty body and see error" do

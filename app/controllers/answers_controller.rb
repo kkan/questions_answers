@@ -1,15 +1,10 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: [ :create, :destroy ]
-  
+
   def create
     @question = Question.find(params[:question_id])
     @answer = current_user.answers.new(answer_params.merge(question: @question))
-    if @answer.save
-      redirect_to @question
-    else
-      flash[:notice] = 'Error while saving answer.'
-      render 'questions/show'
-    end
+    flash[:alert] = @answer.save ? nil : 'Error while saving answer.'
   end
 
   def destroy
