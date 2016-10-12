@@ -6,7 +6,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  def author_of? entry
+  def author_of?(entry)
     id == entry.user_id 
   end
 end
