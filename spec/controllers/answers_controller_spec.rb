@@ -53,5 +53,11 @@ RSpec.describe AnswersController, type: :controller do
 
       expect(response).to redirect_to question_path(question)
     end
+
+    it 'does not delete answer form db if it is not user\'s answer' do
+      answer = create(:answer, question: question, user: create(:user))
+      
+      expect { delete :destroy, params: { question_id: question, id: answer } }.to_not change(Answer, :count)
+    end
   end
 end
