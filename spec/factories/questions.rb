@@ -1,7 +1,8 @@
 FactoryGirl.define do
   factory :question do
-    title 'Description of question'
-    body 'Extended information about question'
+    title { Faker::Lorem.sentence }
+    body { Faker::Lorem.paragraph }
+    association :user, factory: :user
   end
 
   factory :invalid_question, class: 'Question' do

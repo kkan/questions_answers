@@ -13,16 +13,22 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
+gem 'devise'
+
+gem 'faker'
+
 group :development, :test do
   gem 'pry'
   gem 'byebug', platform: :mri
   gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'factory_girl_rails'
+  gem 'launchy'
 end
 
 group :test do
   gem 'shoulda-matchers'
+  gem 'capybara'
 end
 
 group :development do
