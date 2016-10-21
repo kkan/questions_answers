@@ -12,8 +12,9 @@ feature 'Destroy answer', %q{
   scenario 'User deletes his answer' do
     sign_in(user)
 
-    create_answer(attrs)
-    within('table') { click_on 'Delete' }
+    answer = create(:answer, user: user)
+    visit question_path(answer.question_id)
+    within('.answers') { click_on 'Delete' }
 
     expect(page).to have_content 'Answer successfully destroyed'
   end

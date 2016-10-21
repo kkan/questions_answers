@@ -1,0 +1,8 @@
+<% if @answer.persisted? %>
+  $('.notice,.alert').html('');
+  $('.answers').append('<%= j render @answer %>');
+  $('#answer_body').val('');
+<% end %>
+
+$('.notice').html('<%= flash[:notice] %>');
+$('.alert').html('<%= flash[:alert] %>');
