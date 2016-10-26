@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'Destroy question', %q{
   In order to don't show my question to anyone more
