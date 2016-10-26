@@ -1,5 +1,5 @@
-tr
+tr id = "answer_#{answer.id}"
   td 
     span = answer.body
     - if current_user && current_user.author_of?(answer)
-      = link_to 'Delete', question_answer_path(answer.question_id, answer), method: :delete
+      = link_to 'Delete', question_answer_path(answer.question_id, answer), method: :delete, remote: true

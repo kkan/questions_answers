@@ -20,7 +20,7 @@ RSpec.describe AnswersController, type: :controller do
         end.to change(controller.current_user.answers, :count).by(1)
       end
 
-      it 'redirects back to question page' do
+      it 'renders create.js' do
         post :create, params: { question_id: question, answer: attributes_for(:answer) }, format: :js
         expect(response).to render_template 'create'
       end
@@ -47,14 +47,16 @@ RSpec.describe AnswersController, type: :controller do
     it 'removes answer from database' do
       answer = create(:answer, question: question, user: controller.current_user)
 
-      expect { delete :destroy, params: { question_id: question, id: answer } }.to change(Answer, :count).by(-1)
+      expect do
+        delete :destroy, params: { question_id: question, id: answer }, format: :js
+      end.to change(Answer, :count).by(-1)
     end
 
-    it 'redirects to question show page' do
+    it 'renders destroy.js' do
       answer = create(:answer, question: question, user: controller.current_user)
-      delete :destroy, params: { question_id: question, id: answer }
+      delete :destroy, params: { question_id: question, id: answer }, format: :js
 
-      expect(response).to redirect_to question_path(question)
+      expect(response).to render_template 'destroy'
     end
 
     it 'does not delete answer form db if it is not user\'s answer' do

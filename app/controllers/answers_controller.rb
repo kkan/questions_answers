@@ -9,7 +9,6 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer = current_user.answers.find(params[:id]).destroy
-    redirect_to question_path(@answer.question_id), notice: 'Answer successfully destroyed'
   end
 
   private

@@ -9,14 +9,15 @@ feature 'Destroy answer', %q{
   given(:user) { create(:user) }
   given(:attrs) { attributes_for(:answer) }
 
-  scenario 'User deletes his answer' do
+  scenario 'User deletes his answer', js: true do
     sign_in(user)
 
     answer = create(:answer, user: user)
     visit question_path(answer.question_id)
-    within('.answers') { click_on 'Delete' }
-
-    expect(page).to have_content 'Answer successfully destroyed'
+    within('.answers') do
+      click_on 'Delete'
+      expect(page).to_not have_content answer.body
+    end
   end
 
   scenario "Not authentificated user doesn't see link for deleting" do
