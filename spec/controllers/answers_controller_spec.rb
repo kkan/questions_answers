@@ -34,7 +34,7 @@ RSpec.describe AnswersController, type: :controller do
           not_to change(Answer, :count)
       end
 
-      it 'redirects back to question page' do
+      it 'renders create.js' do
         post :create, params: { question_id: question, answer: { body: '' }, format: :js }
         expect(response).to render_template 'create'
       end

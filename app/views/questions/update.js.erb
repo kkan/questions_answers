@@ -1,0 +1,7 @@
+<% if @question.errors.empty? %>
+  $('.notice,.alert').html('');
+  $('.question-view').html('<%= j render @question %>');
+<% end %>
+
+$('.notice').html('<%= flash[:notice] %>');
+$('.alert').html('<%= flash[:alert] %>');

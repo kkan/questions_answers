@@ -25,6 +25,13 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def update
+    @question = current_user.questions.find(params[:id])
+    unless @question.update(question_params)
+      flash[:alert] = 'Error while updating question'
+    end
+  end
+
   def destroy
     current_user.questions.find(params[:id]).destroy!
     redirect_to questions_path, notice: 'Question successfully destroyed'

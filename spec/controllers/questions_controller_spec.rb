@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
+  let(:question_attrs) { attributes_for(:question) }
 
   describe 'GET #show' do
     before { get :show, params: { id: question } }
@@ -21,7 +22,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #new' do
     login_user
-    
+
     before { get :new }
 
     it 'set new question' do
@@ -79,6 +80,29 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'PATCH #update' do
+    login_user
+
+    before do
+      @question = create(:question, user: controller.current_user)
+      patch :update, params: { id: @question, question: question_attrs }, format: :js
+    end
+
+    it 'assigns @question' do
+      expect(assigns(:question)).to eq @question
+    end
+
+    it 'changes question attributes' do
+      @question.reload
+      expect(@question.body).to eq question_attrs[:body]
+      expect(@question.title).to eq question_attrs[:title]
+    end
+
+    it 'renders update.js' do
+      expect(response).to render_template :update
+    end
+  end
+
   describe 'DELETE #destroy' do
     login_user
 
@@ -95,7 +119,6 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'does not delete question form db if it is not user\'s question' do
       q = create(:question)
-      delete :destroy, params: { id: q }
       expect { delete :destroy, params: { id: q } }.to_not change(Question, :count)
     end
   end
