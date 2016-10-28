@@ -11,6 +11,11 @@ class AnswersController < ApplicationController
     @answer = current_user.answers.find(params[:id]).destroy
   end
 
+  def update
+    @answer = current_user.answers.find(params[:id])
+    flash[:alert] = @answer.update(answer_params) ? nil : 'Error while updating answer'
+  end
+
   private
 
   def answer_params

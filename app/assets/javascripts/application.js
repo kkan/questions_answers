@@ -15,4 +15,6 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 
+//= require functions
 //= require questions
+//= require answers

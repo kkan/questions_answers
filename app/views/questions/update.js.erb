@@ -4,5 +4,4 @@
   $('.question .edit-link').click();
 <% end %>
 
-$('.notice').html('<%= flash[:notice] %>');
-$('.alert').html('<%= flash[:alert] %>');
+<%= render 'shared/errors' %>

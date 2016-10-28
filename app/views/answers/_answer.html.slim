@@ -1,5 +1,10 @@
 tr id = "answer_#{answer.id}"
-  td 
+  td.answer-view
     span = answer.body
     - if current_user && current_user.author_of?(answer)
       = link_to 'Delete', question_answer_path(answer.question_id, answer), method: :delete, remote: true
+  td.edit-wrapper
+    - if current_user && current_user.author_of?(answer)
+      a.edit-link href="" data-toggle-text="Cancel" Edit
+      div.answer-edit style="display:none;"
+        = render 'answers/form', answer: answer
