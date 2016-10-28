@@ -27,9 +27,7 @@ class QuestionsController < ApplicationController
 
   def update
     @question = current_user.questions.find(params[:id])
-    unless @question.update(question_params)
-      flash[:alert] = 'Error while updating question'
-    end
+    flash[:alert] = @question.update(question_params) ? nil : 'Error while updating question'
   end
 
   def destroy
