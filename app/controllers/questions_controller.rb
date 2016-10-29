@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: [:show]
 
   def show
-    @answer = @question.answers.build
+    @answer = Answer.new(question: @question)
   end
 
   def new

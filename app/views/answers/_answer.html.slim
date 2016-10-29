@@ -1,8 +1,9 @@
 tr id = "answer_#{answer.id}"
   td.answer-view
     span = answer.body
-    - if current_user && current_user.author_of?(answer)
-      = link_to 'Delete', question_answer_path(answer.question_id, answer), method: :delete, remote: true
+    - if current_user
+      = link_to 'Delete', question_answer_path(answer.question_id, answer), method: :delete, remote: true if current_user.author_of?(answer)
+      = link_to 'Best', set_best_question_answer_path(answer.question_id, answer), method: :put, remote: true, class: 'set-best' if current_user.author_of?(answer.question)
   td.edit-wrapper
     - if current_user && current_user.author_of?(answer)
       a.edit-link href="" data-toggle-text="Cancel" Edit

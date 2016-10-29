@@ -14,12 +14,13 @@ feature 'Set best answer', %q{
     @answer = answers.sample
   end
 
-  scenario 'Author sets best answer for his question' do
+  scenario 'Author sets best answer for his question', js: true do
     sign_in user
     visit question_path(question)
     within '.answers' do
       answer_node = find("#answer_#{@answer.id}")
       answer_node.click_link('Best')
+      wait_for_ajax
       expect(answer_node[:class].include?('best')).to be_truthy
       expect(answer_node).to_not have_link 'Best'
     end
@@ -39,5 +40,10 @@ feature 'Set best answer', %q{
       expect(page).to_not have_link('Best')
     end
   end
+
+  scenario 'User opens question page where setted best answer' do
+    # expect best answer is first
+    # expect best answer has class .best
+  end 
 
 end
