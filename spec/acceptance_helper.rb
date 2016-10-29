@@ -4,6 +4,7 @@ require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
 RSpec.configure do |config|
+  config.include WaitAJAX, type: :feature
   config.include AcceptanceMacros, type: :feature
   config.use_transactional_fixtures = false
 
