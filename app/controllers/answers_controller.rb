@@ -16,6 +16,11 @@ class AnswersController < ApplicationController
     flash[:alert] = @answer.update(answer_params) ? nil : 'Error while updating answer'
   end
 
+  def set_best
+    @answer = current_user.questions.find(params[:question_id]).answers.find(params[:id])
+    flash[:alert] = @answer.update(best: true) ? nil : 'Error while setting best answer'
+  end
+
   private
 
   def answer_params
