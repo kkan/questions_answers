@@ -13,4 +13,27 @@ RSpec.describe Answer, type: :model do
     create(:answer, question: question, best: true)
     expect(build(:answer, question: question, best: true)).to_not be_valid
   end
+
+  it 'should return all best answers' do
+    create_list(:answer, 3)
+    best_answers = create_list(:answer, 3, best: true)
+    expect(Answer.best).to eq best_answers
+  end
+
+  describe 'set answer' do
+    before do
+      question = create(:question)
+      @answer = create_list(:answer, 3, question: question).sample
+      create(:answer, question: question, best: true)
+    end
+
+    it 'should set best answer' do
+      @answer.set_best
+      expect(@answer.best).to be_truthy
+    end
+
+    it 'should return true' do
+      expect(@answer.set_best).to be_truthy
+    end
+  end
 end

@@ -4,4 +4,11 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
   validates :best, uniqueness: { scope: :question_id }, if: :best?
+
+  scope :best, ->{ where(best: true) }
+
+  def set_best
+    Answer.where(question_id: question_id).update_all(best: false)
+    update(best: true)
+  end
 end

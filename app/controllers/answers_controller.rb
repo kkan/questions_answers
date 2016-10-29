@@ -18,7 +18,7 @@ class AnswersController < ApplicationController
 
   def set_best
     @answer = current_user.questions.find(params[:question_id]).answers.find(params[:id])
-    flash[:alert] = @answer.update(best: true) ? nil : 'Error while setting best answer'
+    @answer.set_best
   end
 
   private
