@@ -82,10 +82,33 @@ RSpec.describe AnswersController, type: :controller do
       expect(response).to render_template 'destroy'
     end
 
-    it 'does not delete answer form db if it is not user\'s answer' do
+    it "does not delete answer form db if it is not user's answer" do
       answer = create(:answer, question: question, user: create(:user))
 
       expect { delete :destroy, params: { question_id: question, id: answer } }.to_not change(Answer, :count)
+    end
+  end
+
+  describe 'PUT #set_best' do
+    login_user
+
+    before do
+      user_question = create(:question, user: controller.current_user)
+      @answer = create_list(:answer, 3, question: user_question).sample
+      put :set_best, params: { question_id: user_question, id: @answer }, format: :js
+    end
+
+    it 'renders set_best.js' do
+      expect(response).to render_template 'set_best'
+    end
+
+    it 'assigns @answer' do
+      expect(assigns(:answer)).to eq @answer
+    end
+
+    it "set answer's field 'best' to true" do
+      @answer.reload
+      expect(@answer.best?).to be_truthy
     end
   end
 end
