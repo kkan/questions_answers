@@ -14,10 +14,25 @@ RSpec.describe Answer, type: :model do
     expect(build(:answer, question: question, best: true)).to_not be_valid
   end
 
-  it 'should return all best answers' do
-    create_list(:answer, 3)
-    best_answers = create_list(:answer, 3, best: true)
-    expect(Answer.best).to eq best_answers
+  describe 'best answers scopes' do
+    before do
+      create_list(:answer, 3)
+      @best_answers = create_list(:answer, 3, best: true)
+    end
+
+    it 'should return only best answers' do
+      expect(Answer.best).to eq @best_answers
+    end
+
+    describe 'best first' do
+      it 'should return all answers' do
+        expect(Answer.best_first.count).to eq 6
+      end
+
+      it 'should return best answers first' do
+        expect(Answer.best_first.limit(3)).to eq @best_answers
+      end
+    end
   end
 
   describe 'set answer' do

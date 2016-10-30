@@ -42,8 +42,13 @@ feature 'Set best answer', %q{
   end
 
   scenario 'User opens question page where setted best answer' do
-    # expect best answer is first
-    # expect best answer has class .best
-  end 
+    answer = create(:answer, question: question, best: true)
+    visit question_path(question)
+
+    within '.answers' do
+      expect(first('.answer-view')).to have_content answer.body
+      expect(find("#answer_#{answer.id}")[:class].include?('best')).to be_truthy
+    end
+  end
 
 end

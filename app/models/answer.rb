@@ -6,6 +6,7 @@ class Answer < ApplicationRecord
   validates :best, uniqueness: { scope: :question_id }, if: :best?
 
   scope :best, ->{ where(best: true) }
+  scope :best_first, ->{ order("answers.best = 'true' DESC") }
 
   def set_best
     Answer.where(question_id: question_id).update_all(best: false)
