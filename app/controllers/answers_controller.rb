@@ -17,8 +17,11 @@ class AnswersController < ApplicationController
   end
 
   def set_best
-    @answer = current_user.questions.find(params[:question_id]).answers.find(params[:id])
-    @answer.set_best
+    question = Question.find(params[:question_id])
+    if question.user_id == current_user.id
+      @answer = question.answers.find(params[:id])
+      @answer.set_best
+    end
   end
 
   private

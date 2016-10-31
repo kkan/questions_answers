@@ -9,7 +9,9 @@ class Answer < ApplicationRecord
   scope :best_first, ->{ order("answers.best = 'true' DESC") }
 
   def set_best
-    Answer.where(question_id: question_id).update_all(best: false)
-    update(best: true)
+    transaction do
+      Answer.where(question_id: question_id).update_all(best: false)
+      update!(best: true)
+    end
   end
 end
