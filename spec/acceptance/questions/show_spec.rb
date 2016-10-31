@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'Question body and answers to it page', %q{
   In order to find answer to question

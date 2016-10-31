@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: [:show]
 
   def show
-    @answer = @question.answers.build
+    @answer = Answer.new(question: @question)
   end
 
   def new
@@ -23,6 +23,11 @@ class QuestionsController < ApplicationController
       flash[:alert] = 'Error while saving question.'
       render :new
     end
+  end
+
+  def update
+    @question = current_user.questions.find(params[:id])
+    flash[:alert] = @question.update(question_params) ? nil : 'Error while updating question'
   end
 
   def destroy

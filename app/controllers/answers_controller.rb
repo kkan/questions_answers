@@ -9,7 +9,19 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer = current_user.answers.find(params[:id]).destroy
-    redirect_to question_path(@answer.question_id), notice: 'Answer successfully destroyed'
+  end
+
+  def update
+    @answer = current_user.answers.find(params[:id])
+    flash[:alert] = @answer.update(answer_params) ? nil : 'Error while updating answer'
+  end
+
+  def set_best
+    question = Question.find(params[:question_id])
+    if question.user_id == current_user.id
+      @answer = question.answers.find(params[:id])
+      @answer.set_best
+    end
   end
 
   private

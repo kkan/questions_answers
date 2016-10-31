@@ -6,4 +6,49 @@ RSpec.describe Answer, type: :model do
   it 'validates existing of question' do
     expect(build(:answer, question: nil)).to_not be_valid
   end
+
+  it 'validates existing only one best answer for question' do
+    question = create(:question)
+    create_list(:answer, 3, question: question)
+    create(:answer, question: question, best: true)
+    expect(build(:answer, question: question, best: true)).to_not be_valid
+  end
+
+  describe 'best answers scopes' do
+    before do
+      create_list(:answer, 3)
+      @best_answers = create_list(:answer, 3, best: true)
+    end
+
+    it 'should return only best answers' do
+      expect(Answer.best).to eq @best_answers
+    end
+
+    describe 'best first' do
+      it 'should return all answers' do
+        expect(Answer.best_first.count).to eq 6
+      end
+
+      it 'should return best answers first' do
+        expect(Answer.best_first.limit(3)).to eq @best_answers
+      end
+    end
+  end
+
+  describe 'set answer' do
+    before do
+      question = create(:question)
+      @answer = create_list(:answer, 3, question: question).sample
+      create(:answer, question: question, best: true)
+    end
+
+    it 'should set best answer' do
+      @answer.set_best
+      expect(@answer.best).to be_truthy
+    end
+
+    it 'should return true' do
+      expect(@answer.set_best).to be_truthy
+    end
+  end
 end

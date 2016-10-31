@@ -1,0 +1,7 @@
+<% if @answer.errors.empty? %>
+  $('.notice,.alert').html('');
+  $('#answer_<%= @answer.id %> .answer-view span').html('<%= j @answer.body %>');
+  $('#answer_<%= @answer.id %> .edit-link').click();
+<% end %>
+
+<%= render 'shared/errors' %>

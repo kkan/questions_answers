@@ -1,0 +1,4 @@
+$('.answers .best').removeClass('best');
+$('.answers .set-best').show();
+$('.answers #answer_<%= @answer.id %>').addClass('best');
+$('.answers #answer_<%= @answer.id %> .set-best').hide()
